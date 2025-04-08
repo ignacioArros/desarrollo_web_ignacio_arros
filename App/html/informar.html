@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Actividad</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/formulario.css">
+</head>
+<body>
+    <header>
+        <h1>Agregar Nueva Actividad</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="listado.html">Ver Listado de Actividades</a></li>
+                <li><a href="estadisticas.html">Estadísticas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <form id="actividad-form">
+            <fieldset>
+                <legend>Información del Lugar</legend>
+                <label for="region">Región:</label>
+                <input type="text" id="region" name="region" required>
+                
+                <label for="comuna">Comuna:</label>
+                <input type="text" id="comuna" name="comuna" required>
+                
+                <label for="sector">Sector:</label>
+                <input type="text" id="sector" name="sector" required>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Datos del Organizador</legend>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{9}">
+                
+                <label for="redes">Redes Sociales:</label>
+                <input type="text" id="redes" name="redes">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Información de la Actividad</legend>
+                <label for="fecha">Fecha y Hora:</label>
+                <input type="datetime-local" id="fecha" name="fecha" required>
+                
+                <label for="tema">Tema:</label>
+                <input type="text" id="tema" name="tema" required>
+                
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+                
+                <label for="fotos">Fotos:</label>
+                <input type="file" id="fotos" name="fotos" accept="image/*" multiple>
+            </fieldset>
+            
+            <button type="submit">Agregar Actividad</button>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Plataforma de Actividades Recreativas</p>
+    </footer>
+</body>
+</html>

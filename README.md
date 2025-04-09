@@ -46,6 +46,7 @@ proyecto/
 - En los HTML decidí no usar ningún required en los inputs y hacer todas las validaciones en el javascript, así cada error sale como alerta en vez de que el HTML lo indique por su cuenta.
 - Las imágenes las saqué de internet, generalmente de Wikipedia y de algunos noticieros en línea, espero no infringir derechos de autor porque son placeholder jeje.
 - Decidí copiar y pegar todo lo que estaba en el javascript de region_comuna y llevarlo al de validaciones, así lo podía tomar como una constante y no tener que hacer fetch (Ojalá esté bien xd).
+- Los gráficos en estadísticas fueron hechos con Excel, todos los datos de la página fueron inventados.
 
 ---
 

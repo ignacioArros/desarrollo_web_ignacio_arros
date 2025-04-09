@@ -1,4 +1,4 @@
-# Plataforma de Registro de Actividades
+# Plataforma de Registro de Actividades - Tarea 1 - Desarrollo Web
 
 Este proyecto es una aplicación web desarrollada para el curso CC5002 - Desarrollo de Aplicaciones Web, de la carrera de Ingeniería Civil en Computación de la Universidad de Chile. Permite registrar (pero no guardar), listar y visualizar actividades realizadas en distintas comunas y regiones, con detalles sobre el autor, el tema y fotografías. Esta es la Tarea 1.
 
@@ -40,13 +40,12 @@ proyecto/
 
 ---
 
-## Funcionalidades destacadas
+## Decisiones tomadas
 
-- Formulario validado manualmente con JavaScript (sin validación HTML nativa).
-- Menús dinámicos: las comunas cambian según la región seleccionada.
-- Agregado progresivo de fotos (máximo 5).
-- Confirmación previa antes de enviar actividad.
-- Detalles interactivos en el listado: permite ampliar imágenes.
+- Para los CSS decidí usar ChatGPT para que me diera un diseño rápido que se vea legible (aunque de igual forma los modifiqué para que fueran más consistentes entre páginas). También me ayudó a corregir algunos errores (en especial cuando los metí al validador de HTML y CSS).
+- En los HTML decidí no usar ningún required en los inputs y hacer todas las validaciones en el javascript, así cada error sale como alerta en vez de que el HTML lo indique por su cuenta.
+- Las imágenes las saqué de internet, generalmente de Wikipedia y de algunos noticieros en línea, espero no infringir derechos de autor porque son placeholder jeje.
+- Decidí copiar y pegar todo lo que estaba en el javascript de region_comuna y llevarlo al de validaciones, así lo podía tomar como una constante y no tener que hacer fetch (Ojalá esté bien xd).
 
 ---
 

@@ -1,5 +1,5 @@
 main {
-    max-width: 800px;
+    max-width: 1055px;
     margin: 20px auto;
     background: white;
     padding: 20px;
@@ -17,6 +17,9 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 thead {
@@ -51,6 +54,26 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.galeria img {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.galeria img:hover {
+    transform: scale(1.03);
+}
+
 
 button {
     background-color: #0073e6;

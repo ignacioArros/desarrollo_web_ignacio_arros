@@ -1,4 +1,4 @@
-let region_comuna = {
+const region_comuna = {
     "regiones": [
         {
         "numero": 1, "nombre": "Región de Tarapacá",

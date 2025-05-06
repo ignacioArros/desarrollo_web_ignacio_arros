@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividades Recreativas</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
     <header>
         <h1>Bienvenido a la Plataforma de Actividades Recreativas</h1>
         <nav>
             <ul>
-                <li><a href="informar.html">Agregar Actividad</a></li>
-                <li><a href="listado.html">Ver Listado de Actividades</a></li>
-                <li><a href="estadisticas.html">Estadísticas</a></li>
+                <li><a href="{{ url_for('informar') }}">Agregar Actividad</a></li>
+                <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
+                <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
             </ul>
         </nav>
     </header>
@@ -39,7 +39,7 @@
                         <td>Santiago</td>
                         <td>Beauchef 850, pajarera</td>
                         <td>Estudio</td>
-                        <td><img src="../img/estudio.jpg" alt="Estudio" width="100"></td>
+                        <td><img src="../static/uploads/estudio.jpg" alt="Estudio" width="100"></td>
                     </tr>
                     <tr>
                         <td>2025-04-07 15:00</td>
@@ -47,7 +47,7 @@
                         <td>Ñuñoa</td>
                         <td>Mi casa</td>
                         <td>Juegos</td>
-                        <td><img src="../img/AOM.jpg" alt="AOM" width="100"></td>
+                        <td><img src="../static/uploads/AOM.jpg" alt="AOM" width="100"></td>
                     </tr>
                     <tr>
                         <td>2025-03-07 18:00</td>
@@ -55,7 +55,7 @@
                         <td>La Reina</td>
                         <td>En las calles</td>
                         <td>Deporte</td>
-                        <td><img src="../img/trote.jpg" alt="Trote" width="100"></td>
+                        <td><img src="../static/uploads/trote.jpg" alt="Trote" width="100"></td>
                     </tr>
                     <tr>
                         <td>2025-04-08 10:00</td>
@@ -63,7 +63,7 @@
                         <td>Peñalolen</td>
                         <td>Cineplanet</td>
                         <td>Cine</td>
-                        <td><img src="../img/cine.jpg" alt="Cine" width="100"></td>
+                        <td><img src="../static/uploads/cine.jpg" alt="Cine" width="100"></td>
                     </tr>
                     <tr>
                         <td>2025-04-08 13:00</td>
@@ -71,7 +71,7 @@
                         <td>Providencia</td>
                         <td>Costanera Center</td>
                         <td>Ir al mall</td>
-                        <td><img src="../img/mall.jpeg" alt="Mall" width="100"></td>
+                        <td><img src="../static/uploads/mall.jpeg" alt="Mall" width="100"></td>
                     </tr>
                 </tbody>
             </table>

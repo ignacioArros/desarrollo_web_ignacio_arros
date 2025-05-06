@@ -6,7 +6,7 @@ const actividades = [
       sector: "Parque Bustamante",
       tema: "Yoga al aire libre",
       organizador: "Camila Soto",
-      fotos: ["../img/yoga1.jpeg", "../img/yoga2.png", "../img/yoga3.jpeg"]
+      fotos: ["../static/uploads/yoga1.jpeg", "../static/uploads/yoga2.png", "../static/uploads/yoga3.jpeg"]
     },
     {
       inicio: "2025-04-12 15:00",
@@ -15,7 +15,7 @@ const actividades = [
       sector: "Plaza Ñuñoa",
       tema: "Clase de pintura",
       organizador: "Andrés Rojas",
-      fotos: ["../img/pintura1.jpg", "../img/pintura2.jpg"]
+      fotos: ["../static/uploads/pintura1.jpg", "../static/uploads/pintura2.jpg"]
     },
     {
       inicio: "2025-04-15 09:00",
@@ -24,7 +24,7 @@ const actividades = [
       sector: "Parque Araucano",
       tema: "Taller de cerámica",
       organizador: "Lucía Fernández",
-      fotos: ["../img/ceramica1.jpeg", "../img/ceramica2.jpg", "../img/ceramica3.jpg", "../img/ceramica4.jpg"]
+      fotos: ["../static/uploads/ceramica1.jpeg", "../static/uploads/ceramica2.jpg", "../static/uploads/ceramica3.jpg", "../static/uploads/ceramica4.jpg"]
     },
     {
       inicio: "2025-04-18 17:00",
@@ -33,7 +33,7 @@ const actividades = [
       sector: "Casa de la Cultura",
       tema: "Cine al aire libre",
       organizador: "José Ramírez",
-      fotos: ["../img/cinelibre1.jpg"]
+      fotos: ["../static/uploads/cinelibre1.jpg"]
     },
     {
       inicio: "2025-04-22 14:00",
@@ -42,7 +42,7 @@ const actividades = [
       sector: "Centro Comunitario",
       tema: "Charla medioambiental",
       organizador: "Daniela López",
-      fotos: ["../img/medio1.jpeg", "../img/medio2.jpeg"]
+      fotos: ["../static/uploads/medio1.jpeg", "../static/uploads/medio2.jpeg"]
     }
   ];
   
@@ -84,12 +84,12 @@ const actividades = [
   
   function ampliarFoto(img) {
     if (imagenAmpliada) return;
-    tamañoOriginal = { width: img.width, height: img.height };
-    imagenAmpliada = img;
+    tamañoOriginal = { width: static/uploads.width, height: static/uploads.height };
+    imagenAmpliada = static/uploads;
     img.width = 800;
     img.height = 600;
   
-    const contenedor = img.parentElement;
+    const contenedor = static/uploads.parentElement;
     botonCerrar = document.createElement("button");
     botonCerrar.textContent = "Cerrar";
     botonCerrar.onclick = cerrarFoto;

@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Actividades</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/listado.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/listado.css">
 </head>
 <body>
     <header>
         <h1>Listado de Actividades</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="informar.html">Agregar Actividad</a></li>
-                <li><a href="estadisticas.html">Estadísticas</a></li>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('informar') }}">Agregar Actividad</a></li>
+                <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
             </ul>
         </nav>
     </header>
@@ -103,6 +103,6 @@
         <p>&copy; 2025 Plataforma de Actividades Recreativas</p>
     </footer>
 
-    <script src="../js/listado.js"></script>
+    <script src="../static/js/listado.js"></script>
 </body>
 </html>

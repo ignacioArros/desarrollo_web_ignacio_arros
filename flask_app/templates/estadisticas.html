@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadísticas</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/estadisticas.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/estadisticas.css">
 </head>
 <body>
     <header>
@@ -26,20 +26,20 @@
             <h2>Visualización de Datos</h2>
             <table>
                 <tr>
-                  <td><img src="../img/lineas.png" width="500" alt="Actividades por día"></td>
+                  <td><img src="../static/uploads/lineas.png" width="500" alt="Actividades por día"></td>
                 </tr>
                 <tr>
-                  <td><img src="../img/torta.png" width="500" alt="Actividades por tipo"></td>
+                  <td><img src="../static/uploads/torta.png" width="500" alt="Actividades por tipo"></td>
                 </tr>
                 <tr>
-                  <td><img src="../img/barras.png" width="500" alt="Actividades por horario"></td>
+                  <td><img src="../static/uploads/barras.png" width="500" alt="Actividades por horario"></td>
                 </tr>
             </table>
         </section>
         <div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Volver al Inicio</a></li>
+                    <li><a href="{{ url_for('index') }}">Volver al Inicio</a></li>
                 </ul>
             </nav>
         </div>

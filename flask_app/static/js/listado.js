@@ -6,6 +6,7 @@ const actividades = [
       sector: "Parque Bustamante",
       tema: "Yoga al aire libre",
       organizador: "Camila Soto",
+      contacto: "X: @camila_soto",
       fotos: ["../static/uploads/yoga1.jpeg", "../static/uploads/yoga2.png", "../static/uploads/yoga3.jpeg"]
     },
     {
@@ -15,6 +16,7 @@ const actividades = [
       sector: "Plaza Ñuñoa",
       tema: "Clase de pintura",
       organizador: "Andrés Rojas",
+      contacto: "instagram: @andres_rojas",
       fotos: ["../static/uploads/pintura1.jpg", "../static/uploads/pintura2.jpg"]
     },
     {
@@ -24,6 +26,7 @@ const actividades = [
       sector: "Parque Araucano",
       tema: "Taller de cerámica",
       organizador: "Lucía Fernández",
+      contacto: "X: @lucia_fernandez ; instagram: @lucia_fernandez",
       fotos: ["../static/uploads/ceramica1.jpeg", "../static/uploads/ceramica2.jpg", "../static/uploads/ceramica3.jpg", "../static/uploads/ceramica4.jpg"]
     },
     {
@@ -33,6 +36,7 @@ const actividades = [
       sector: "Casa de la Cultura",
       tema: "Cine al aire libre",
       organizador: "José Ramírez",
+      contacto: "whatsapp: +56912345678",
       fotos: ["../static/uploads/cinelibre1.jpg"]
     },
     {
@@ -42,6 +46,7 @@ const actividades = [
       sector: "Centro Comunitario",
       tema: "Charla medioambiental",
       organizador: "Daniela López",
+      contacto: "tiktok: @daniela_lopez ; instagram: @daniela_lopez",
       fotos: ["../static/uploads/medio1.jpeg", "../static/uploads/medio2.jpeg"]
     }
   ];
@@ -60,6 +65,7 @@ const actividades = [
       <p><strong>Sector:</strong> ${actividad.sector}</p>
       <p><strong>Tema:</strong> ${actividad.tema}</p>
       <p><strong>Organizador:</strong> ${actividad.organizador}</p>
+      <p><strong>Contacto:</strong> ${actividad.contacto}</p>
       <p><strong>Total de fotos:</strong> ${actividad.fotos.length}</p>
       <div class="galeria">
         ${actividad.fotos

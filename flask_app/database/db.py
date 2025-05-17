@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Enum, DateTime
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
 
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002"
@@ -124,6 +124,12 @@ def get_comuna_by_id(comuna_id):
     session.close()
     return comuna
 
+def get_comunas_by_region(region_id):
+    session = SessionLocal()
+    comunas = session.query(Comuna).filter_by(region_id=region_id).all()
+    session.close()
+    return comunas
+
 def create_comuna(nombre, region_id):
     session = SessionLocal()
     new_comuna = Comuna(nombre=nombre, region_id=region_id)
@@ -142,13 +148,26 @@ def delete_comuna(comuna_id):
 # --- Actividad ---
 def get_all_actividades():
     session = SessionLocal()
-    actividades = session.query(Actividad).all()
+    actividades = session.query(Actividad).options(
+        joinedload(Actividad.comuna), 
+        joinedload(Actividad.temas),
+        joinedload(Actividad.fotos)).all()
     session.close()
     return actividades
 
 def get_actividad_by_id(actividad_id):
     session = SessionLocal()
     actividad = session.query(Actividad).filter_by(id=actividad_id).first()
+    session.close()
+    return actividad
+
+def get_actividad_by_campos(nombre, email, dia_hora_inicio):
+    session = SessionLocal()
+    actividad = session.query(Actividad).filter_by(
+        nombre=nombre,
+        email=email,
+        dia_hora_inicio=dia_hora_inicio
+    ).first()
     session.close()
     return actividad
 

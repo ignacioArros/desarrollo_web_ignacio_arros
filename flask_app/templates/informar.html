@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Actividad</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
-    <link rel="stylesheet" href="../static/css/formulario.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/formulario.css') }}">
 </head>
 <body>
     <header>
@@ -20,21 +20,34 @@
     </header>
 
     <main>
-        <form id="actividad-form">
+        {% with mensajes = get_flashed_messages() %}
+            {% if mensajes %}
+                <ul class="flashes">
+                {% for mensaje in mensajes %}
+                    <li>{{ mensaje }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form id="actividad-form" method="POST" action="{{ url_for('informar') }}" enctype="multipart/form-data">
             <fieldset>
                 <legend>¿Dónde?</legend>
                 <label for="region">Región:</label>
-                <select id="region" name="region">
+                <select id="region" name="region" required>
                     <option value="">Seleccione una región</option>
+                    {% for region in regiones %}
+                        <option value="{{ region.id }}">{{ region.nombre }}</option>
+                    {% endfor %}
                 </select>
 
                 <label for="comuna">Comuna:</label>
-                <select id="comuna" name="comuna">
+                <select id="comuna" name="comuna" required>
                     <option value="">Seleccione una comuna</option>
                 </select>
 
                 <label for="sector">Sector:</label>
-                <input type="text" id="sector" name="sector">
+                <input type="text" id="sector" name="sector" maxlength="100">
             </fieldset>
 
             <fieldset>
@@ -49,41 +62,52 @@
                 <input type="tel" id="telefono" name="telefono" placeholder="+569.12345678">
 
                 <label>Contactar por:</label>
-                <input type="checkbox" name="WhatsApp" onclick="revisaCheck(this);"> WhatsApp
-                <input id="WhatsApp" type="text" name="whatsapp-id" style="display:none;"> <br>
-                <input type="checkbox" name="Instagram" onclick="revisaCheck(this);"> Instagram
-                <input id="Instagram" type="text" name="instagram-id" style="display:none;"><br>
-                <input type="checkbox" name="Telegram" onclick="revisaCheck(this);"> Telegram
-                <input id="Telegram" type="text" name="telegram-id" style="display:none;"><br>
-                <input type="checkbox" name="X" onclick="revisaCheck(this);"> X
-                <input id="X" type="text" name="x-id" style="display:none;"><br>
-                <input type="checkbox" name="TikTok" onclick="revisaCheck(this);"> TikTok
-                <input id="TikTok" type="text" name="tiktok-id" style="display:none;"><br>
-                <input type="checkbox" name="Otro" onclick="revisaCheck(this);"> Otro
-                <input id="Otro" type="text" name="otro-id" style="display:none;">
-                <div id="contacto-info"></div>
+                <div>
+                    <input type="checkbox" name="contacto" value="WhatsApp" id="check-whatsapp" onclick="revisaCheck(this);"> WhatsApp
+                    <input id="WhatsApp-id" type="text" name="whatsapp-id" style="display:none;">
+                </div>
+                <div>
+                    <input type="checkbox" name="contacto" value="Instagram" id="check-instagram" onclick="revisaCheck(this);"> Instagram
+                    <input id="Instagram-id" type="text" name="instagram-id" style="display:none;">
+                </div>
+                <div>
+                    <input type="checkbox" name="contacto" value="Telegram" id="check-telegram" onclick="revisaCheck(this);"> Telegram
+                    <input id="Telegram-id" type="text" name="telegram-id" style="display:none;">
+                </div>
+                <div>
+                    <input type="checkbox" name="contacto" value="X" id="check-x" onclick="revisaCheck(this);"> X
+                    <input id="X-id" type="text" name="x-id" style="display:none;">
+                </div>
+                <div>
+                    <input type="checkbox" name="contacto" value="TikTok" id="check-tiktok" onclick="revisaCheck(this);"> TikTok
+                    <input id="TikTok-id" type="text" name="tiktok-id" style="display:none;">
+                </div>
+                <div>
+                    <input type="checkbox" name="contacto" value="Otro" id="check-otro" onclick="revisaCheck(this);"> Otro
+                    <input id="Otro-id" type="text" name="otro-id" style="display:none;">
+                </div>
             </fieldset>
 
             <fieldset>
                 <legend>¿Cuándo y de qué trata?</legend>
                 <label for="inicio">Día y hora de inicio:</label>
-                <input type="datetime-local" id="inicio" name="inicio">
+                <input type="datetime-local" id="inicio" name="inicio" required>
 
                 <label for="termino">Día y hora de término:</label>
                 <input type="datetime-local" id="termino" name="termino">
 
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>
+                <textarea id="descripcion" name="descripcion" cols="50" rows="10" maxlength="500"></textarea>
 
                 <label for="tema">Tema:</label>
-                <select id="tema" name="tema">
+                <select id="tema" name="tema" required onchange="mostrarTemaOtro(this)">
                     <option value="">Seleccionar</option>
-                    <option value="musica">Música</option>
+                    <option value="música">Música</option>
                     <option value="deporte">Deporte</option>
                     <option value="ciencias">Ciencias</option>
-                    <option value="religion">Religión</option>
-                    <option value="politica">Política</option>
-                    <option value="tecnologia">Tecnología</option>
+                    <option value="religión">Religión</option>
+                    <option value="política">Política</option>
+                    <option value="tecnología">Tecnología</option>
                     <option value="juegos">Juegos</option>
                     <option value="baile">Baile</option>
                     <option value="comida">Comida</option>
@@ -93,12 +117,13 @@
 
                 <label>Fotos:</label>
                 <div id="foto-container">
-                    <input type="file" name="foto[]" accept="image/*">
+                    <input type="file" name="fotos" accept="image/*">
                 </div>
                 <button type="button" id="agregar-foto">Agregar otra foto</button>
+                <small>Puedes subir hasta 5 fotos (jpg, jpeg, png, gif).</small>
             </fieldset>
 
-            <button type="submit">Agregar esta actividad</button>
+            <button type="button" id="iniciar-confirmacion">Agregar esta actividad</button>
         </form>
 
         <div id="confirmacion" style="display:none; text-align:center; margin-top:20px;">
@@ -109,7 +134,7 @@
 
         <div id="gracias" style="display:none; text-align:center; margin-top:20px;">
             <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
-            <a href="index.html" class="boton">Volver a la Portada</a>
+            <a href="{{ url_for('index') }}" class="boton">Volver a la Portada</a>
         </div>
     </main>
 
@@ -117,6 +142,7 @@
         <p>&copy; 2025 Plataforma de Actividades Recreativas</p>
     </footer>
 
-    <script src="../static/js/validaciones.js"></script>
+    <script> const regionesYComunas = {{ regiones_y_comunas|safe }} </script>
+    <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
 </body>
 </html>

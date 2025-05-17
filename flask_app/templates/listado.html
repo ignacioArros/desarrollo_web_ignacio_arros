@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Actividades</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
-    <link rel="stylesheet" href="../static/css/listado.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/listado.css') }}">
 </head>
 <body>
     <header>
@@ -35,60 +35,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onclick="mostrarDetalle(0)">
-                        <td>2025-04-10 10:00</td>
-                        <td>2025-04-10 12:00</td>
-                        <td>Providencia</td>
-                        <td>Parque Bustamante</td>
-                        <td>Yoga al aire libre</td>
-                        <td>Camila Soto</td>
-                        <td>3</td>
+                    {% for actividad in actividades %}
+                    <tr onclick="mostrarDetalle({{ actividad.id }})" style="cursor:pointer;">
+                        <td>{{ actividad.dia_hora_inicio.strftime('%Y-%m-%d %H:%M') if actividad.dia_hora_inicio else '' }}</td>
+                        <td>{{ actividad.dia_hora_termino.strftime('%Y-%m-%d %H:%M') if actividad.dia_hora_termino else '' }}</td>
+                        <td>{{ actividad.comuna.nombre }}</td>
+                        <td>{{ actividad.sector }}</td>
+                        <td>
+                            {% for tema in actividad.temas %}
+                                {{ tema.tema }}{% if tema.tema == 'otro' and tema.glosa_otro %} ({{ tema.glosa_otro }}){% endif %}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ actividad.nombre }}</td>
+                        <td>{{ actividad.fotos|length }}</td>
                     </tr>
-                    <tr onclick="mostrarDetalle(1)">
-                        <td>2025-04-12 15:00</td>
-                        <td>2025-04-12 18:00</td>
-                        <td>Ñuñoa</td>
-                        <td>Plaza Ñuñoa</td>
-                        <td>Clase de pintura</td>
-                        <td>Andrés Rojas</td>
-                        <td>2</td>
-                    </tr>
-                    <tr onclick="mostrarDetalle(2)">
-                        <td>2025-04-15 09:00</td>
-                        <td>2025-04-15 11:30</td>
-                        <td>Las Condes</td>
-                        <td>Parque Araucano</td>
-                        <td>Taller de cerámica</td>
-                        <td>Lucía Fernández</td>
-                        <td>4</td>
-                    </tr>
-                    <tr onclick="mostrarDetalle(3)">
-                        <td>2025-04-18 17:00</td>
-                        <td>2025-04-18 20:00</td>
-                        <td>La Reina</td>
-                        <td>Casa de la Cultura</td>
-                        <td>Cine al aire libre</td>
-                        <td>José Ramírez</td>
-                        <td>1</td>
-                    </tr>
-                    <tr onclick="mostrarDetalle(4)">
-                        <td>2025-04-22 14:00</td>
-                        <td>2025-04-22 16:00</td>
-                        <td>Macul</td>
-                        <td>Centro Comunitario</td>
-                        <td>Charla medioambiental</td>
-                        <td>Daniela López</td>
-                        <td>2</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            <div class="paginacion">
+                {% if page > 1 %}
+                    <a href="{{ url_for('listado', page=page-1) }}">Anterior</a>
+                {% endif %}
+                <span>Página {{ page }} de {{ max_page }}</span>
+                {% if page < max_page %}
+                    <a href="{{ url_for('listado', page=page+1) }}">Siguiente</a>
+                {% endif %}
+            </div>
         </section>
 
         <section id="detalle-actividad" style="display: none;">
             <h2>Detalle de la Actividad</h2>
             <div id="detalle-contenido"></div>
             <button onclick="volverListado()">Volver al Listado</button>
-            <button onclick="location.href='index.html'">Volver al Inicio</button>
+            <button onclick="location.href='{{ url_for('index') }}'">Volver al Inicio</button>
         </section>
 
         <div id="modal-foto" class="modal" style="display: none;">
@@ -103,6 +82,6 @@
         <p>&copy; 2025 Plataforma de Actividades Recreativas</p>
     </footer>
 
-    <script src="../static/js/listado.js"></script>
+    <script src="{{ url_for('static', filename='js/listado.js') }}"></script>
 </body>
 </html>

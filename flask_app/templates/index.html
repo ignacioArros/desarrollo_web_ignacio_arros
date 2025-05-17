@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividades Recreativas</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <header>
@@ -33,46 +33,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% if actividades|length == 0 %}
                     <tr>
-                        <td>2025-04-07 12:00</td>
-                        <td>2025-04-07 13:30</td>
-                        <td>Santiago</td>
-                        <td>Beauchef 850, pajarera</td>
-                        <td>Estudio</td>
-                        <td><img src="../static/uploads/estudio.jpg" alt="Estudio" width="100"></td>
+                        <td colspan="6" style="text-align:center;">No se han agregado actividades.</td>
                     </tr>
-                    <tr>
-                        <td>2025-04-07 15:00</td>
-                        <td>2025-04-07 17:00</td>
-                        <td>Ñuñoa</td>
-                        <td>Mi casa</td>
-                        <td>Juegos</td>
-                        <td><img src="../static/uploads/AOM.jpg" alt="AOM" width="100"></td>
-                    </tr>
-                    <tr>
-                        <td>2025-03-07 18:00</td>
-                        <td>-</td>
-                        <td>La Reina</td>
-                        <td>En las calles</td>
-                        <td>Deporte</td>
-                        <td><img src="../static/uploads/trote.jpg" alt="Trote" width="100"></td>
-                    </tr>
-                    <tr>
-                        <td>2025-04-08 10:00</td>
-                        <td>2025-04-08 12:30</td>
-                        <td>Peñalolen</td>
-                        <td>Cineplanet</td>
-                        <td>Cine</td>
-                        <td><img src="../static/uploads/cine.jpg" alt="Cine" width="100"></td>
-                    </tr>
-                    <tr>
-                        <td>2025-04-08 13:00</td>
-                        <td>2025-04-08 16:00</td>
-                        <td>Providencia</td>
-                        <td>Costanera Center</td>
-                        <td>Ir al mall</td>
-                        <td><img src="../static/uploads/mall.jpeg" alt="Mall" width="100"></td>
-                    </tr>
+                    {% else %}
+                        {% for actividad in actividades %}
+                        <tr>
+                            <td>{{ actividad.dia_hora_inicio.strftime('%Y-%m-%d %H:%M') if actividad.dia_hora_inicio else '-' }}</td>
+                            <td>{{ actividad.dia_hora_termino.strftime('%Y-%m-%d %H:%M') if actividad.dia_hora_termino else '-' }}</td>
+                            <td>{{ actividad.comuna.nombre if actividad.comuna else '-' }}</td>
+                            <td>{{ actividad.sector or '-' }}</td>
+                            <td>
+                                {% for tema in actividad.temas %}
+                                    {{ tema.tema }}{% if tema.tema == 'otro' and tema.glosa_otro %} ({{ tema.glosa_otro }}){% endif %}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% if actividad.fotos and actividad.fotos|length > 0 %}
+                                    <img src="{{ url_for('static', filename='uploads/' ~ actividad.fotos[0].nombre_archivo) }}" alt="Foto actividad" width="100">
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </section>

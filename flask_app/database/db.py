@@ -156,6 +156,17 @@ def get_all_actividades():
     session.close()
     return actividades
 
+def get_all_actividades_por_id_desc():
+    session = SessionLocal()
+    actividades = session.query(Actividad).options(
+        joinedload(Actividad.comuna),
+        joinedload(Actividad.contactos),
+        joinedload(Actividad.temas),
+        joinedload(Actividad.fotos)
+    ).order_by(Actividad.id.desc()).all()
+    session.close()
+    return actividades
+
 def get_actividad_by_id(actividad_id):
     session = SessionLocal()
     actividad = session.query(Actividad).filter_by(id=actividad_id).options(

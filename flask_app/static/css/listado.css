@@ -110,3 +110,14 @@ button:hover {
     padding: 6px 12px;
     cursor: pointer;
 }
+
+.temas-lista {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+}
+
+.temas-lista li {
+    display: inline-block;
+    margin: 0 10px;
+}

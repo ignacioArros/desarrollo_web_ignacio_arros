@@ -9,9 +9,9 @@
         <p><strong>Descripción:</strong> {{ actividad.descripcion or 'No proporcionada' }}</p>
 
         <h3>Tema</h3>
-        <ul>
+        <ul class="temas-lista">
             {% for t in actividad.temas %}
-                <p>
+                <li>
                     <strong>
                         {% if t.tema == 'otro' and t.glosa_otro %}
                             {{ t.glosa_otro }}
@@ -19,7 +19,7 @@
                             {{ t.tema }}
                         {% endif %}
                     </strong>
-                </p>
+                </li>
             {% endfor %}
         </ul>
 

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from database.db import (
-    get_all_regions, get_all_comunas, get_all_actividades, get_actividad_by_id,
+    get_all_regions, get_all_comunas, get_all_actividades, get_all_actividades_por_id_desc, get_actividad_by_id,
     get_actividad_by_campos, create_actividad, create_tema, create_contacto, create_foto
 )
 import hashlib
@@ -23,8 +23,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 # Ruta para la portada
 @app.route('/')
 def index():
-    actividades = get_all_actividades()
-    actividades = sorted(actividades, key=lambda a: a.dia_hora_inicio, reverse=True)[:5]
+    actividades = get_all_actividades_por_id_desc()[:5]
     return render_template('index.html', actividades=actividades)
 
 # Ruta para agregar actividades
@@ -51,7 +50,7 @@ def informar():
         if errores:
             for error in errores:
                 flash(error)
-            return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas)
+            return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas, mostrar_gracias=False)
         try:
             # Obtener datos del formulario 
             comuna_id = request.form.get('comuna')
@@ -83,7 +82,7 @@ def informar():
             actividad = get_actividad_by_campos(nombre=nombre, email=email, dia_hora_inicio=datetime.fromisoformat(inicio))
             if not actividad:
                 flash('No se pudo recuperar la actividad recién creada.')
-                return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas)
+                return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas, mostrar_gracias=False)
 
             # Insertar temas 
             for t in temas:
@@ -115,19 +114,18 @@ def informar():
                     create_foto(ruta_archivo=ruta, nombre_archivo=img_filename, actividad_id=actividad.id)
 
             flash('Actividad registrada exitosamente.')
-            return redirect(url_for('index'))
+            return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas, mostrar_gracias=True)
 
         except Exception as e:
             flash(f'Error al guardar en la base de datos: {str(e)}')
-    return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas)
+    return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas, mostrar_gracias=False)
 
 # Ruta para el listado
 @app.route('/listado')
 def listado():
     page = int(request.args.get('page', 1))
     per_page = 5
-    actividades = get_all_actividades()
-    actividades = sorted(actividades, key=lambda a: a.dia_hora_inicio, reverse=True)
+    actividades = get_all_actividades_por_id_desc()
     total = len(actividades)
     actividades_pagina = actividades[(page-1)*per_page:page*per_page]
     max_page = (total + per_page - 1) // per_page

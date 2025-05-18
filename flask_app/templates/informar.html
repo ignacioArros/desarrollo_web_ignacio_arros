@@ -30,6 +30,13 @@
             {% endif %}
         {% endwith %}
 
+        {% if mostrar_gracias %}
+        <div id="gracias" style="text-align:center; margin-top:20px;">
+            <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
+            <a href="{{ url_for('index') }}" class="boton">Volver a la Portada</a>
+        </div>
+    
+        {% else %}
         <form id="actividad-form" method="POST" action="{{ url_for('informar') }}" enctype="multipart/form-data">
             <fieldset>
                 <legend>¿Dónde?</legend>
@@ -132,10 +139,7 @@
             <button id="cancelar">No, no estoy seguro, quiero volver al formulario</button>
         </div>
 
-        <div id="gracias" style="display:none; text-align:center; margin-top:20px;">
-            <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
-            <a href="{{ url_for('index') }}" class="boton">Volver a la Portada</a>
-        </div>
+        {% endif %}
     </main>
 
     <footer>

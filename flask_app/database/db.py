@@ -149,7 +149,8 @@ def delete_comuna(comuna_id):
 def get_all_actividades():
     session = SessionLocal()
     actividades = session.query(Actividad).options(
-        joinedload(Actividad.comuna), 
+        joinedload(Actividad.comuna),
+        joinedload(Actividad.contactos),
         joinedload(Actividad.temas),
         joinedload(Actividad.fotos)).all()
     session.close()
@@ -157,7 +158,11 @@ def get_all_actividades():
 
 def get_actividad_by_id(actividad_id):
     session = SessionLocal()
-    actividad = session.query(Actividad).filter_by(id=actividad_id).first()
+    actividad = session.query(Actividad).filter_by(id=actividad_id).options(
+        joinedload(Actividad.comuna),
+        joinedload(Actividad.contactos), 
+        joinedload(Actividad.temas),
+        joinedload(Actividad.fotos)).first()
     session.close()
     return actividad
 

@@ -5,7 +5,6 @@ from database.db import (
 )
 import hashlib
 import os
-import json
 import filetype
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -52,7 +51,7 @@ def informar():
         if errores:
             for error in errores:
                 flash(error)
-            return render_template('informar.html', regiones=regiones, comunas=comunas, regiones_y_comunas=json.dumps(regiones_y_comunas))
+            return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas)
         try:
             # Obtener datos del formulario 
             comuna_id = request.form.get('comuna')
@@ -67,16 +66,7 @@ def informar():
             tema_otro = request.form.get('tema_otro')
             contactos = request.form.getlist('contacto')
             archivos = request.files.getlist('fotos')
-            print(comuna_id, sector, nombre, email, celular, inicio, termino, descripcion, temas, tema_otro, contactos)
-
-            # Validaciones básicas
-            if not comuna_id or not nombre or not email or not inicio or not temas or len(archivos) == 0:
-                flash('Faltan datos obligatorios o no se seleccionó ninguna foto.')
-                return render_template('informar.html', regiones=regiones, comunas=comunas, regiones_y_comunas=json.dumps(regiones_y_comunas))
-
-            if 'otro' in temas and (not tema_otro or len(tema_otro.strip()) < 3):
-                flash('Debe ingresar un tema válido si selecciona "otro".')
-                return render_template('informar.html', regiones=regiones, comunas=comunas, regiones_y_comunas=json.dumps(regiones_y_comunas))
+            # print(comuna_id, sector, nombre, email, celular, inicio, termino, descripcion, temas, tema_otro, contactos)
 
             # Insertar actividad
             create_actividad(
@@ -93,7 +83,7 @@ def informar():
             actividad = get_actividad_by_campos(nombre=nombre, email=email, dia_hora_inicio=datetime.fromisoformat(inicio))
             if not actividad:
                 flash('No se pudo recuperar la actividad recién creada.')
-                return render_template('informar.html', regiones=regiones, comunas=comunas, regiones_y_comunas=json.dumps(regiones_y_comunas))
+                return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas)
 
             # Insertar temas 
             for t in temas:
@@ -129,7 +119,7 @@ def informar():
 
         except Exception as e:
             flash(f'Error al guardar en la base de datos: {str(e)}')
-    return render_template('informar.html', regiones=regiones, comunas=comunas, regiones_y_comunas=json.dumps(regiones_y_comunas))
+    return render_template('informar.html', regiones=regiones, regiones_y_comunas=regiones_y_comunas)
 
 # Ruta para el listado
 @app.route('/listado')
@@ -141,6 +131,8 @@ def listado():
     total = len(actividades)
     actividades_pagina = actividades[(page-1)*per_page:page*per_page]
     max_page = (total + per_page - 1) // per_page
+    if total == 0:
+        max_page = 1
     return render_template(
         'listado.html',
         actividades=actividades_pagina,

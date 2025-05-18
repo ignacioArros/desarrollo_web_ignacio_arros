@@ -142,7 +142,10 @@
         <p>&copy; 2025 Plataforma de Actividades Recreativas</p>
     </footer>
 
-    <script> const regionesYComunas = {{ regiones_y_comunas|safe }} </script>
+    <script id="regiones-data" type="application/json">{{ regiones_y_comunas|tojson }}</script>
+    <script>
+        const regionesYComunas = JSON.parse(document.getElementById('regiones-data').textContent);
+    </script>
     <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
 </body>
 </html>

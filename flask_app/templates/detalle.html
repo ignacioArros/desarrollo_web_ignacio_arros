@@ -1,56 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle Actividad</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <header>
-        <h1>Detalle de Actividad</h1>
-    </header>
+    <section>
+        <h3>Organizador: {{ actividad.nombre }}</h3>
+        <p><strong>Comuna:</strong> {{ actividad.comuna.nombre }}</p>
+        <p><strong>Sector:</strong> {{ actividad.sector or 'No especificado' }}</p>
+        <p><strong>Inicio:</strong> {{ actividad.dia_hora_inicio.strftime("%Y-%m-%d %H:%M") }}</p>
+        <p><strong>Término:</strong> {{ actividad.dia_hora_termino.strftime("%Y-%m-%d %H:%M") if actividad.dia_hora_termino else 'No especificado' }}</p>
+        <p><strong>Descripción:</strong> {{ actividad.descripcion or 'No proporcionada' }}</p>
 
-    <main>
-        <section>
-            <h2>{{ actividad.nombre }}</h2>
-            <p><strong>Comuna:</strong> {{ actividad.comuna.nombre }}</p>
-            <p><strong>Sector:</strong> {{ actividad.sector or 'No especificado' }}</p>
-            <p><strong>Inicio:</strong> {{ actividad.dia_hora_inicio.strftime("%Y-%m-%d %H:%M") }}</p>
-            <p><strong>Término:</strong> {{ actividad.dia_hora_termino.strftime("%Y-%m-%d %H:%M") if actividad.dia_hora_termino else 'No especificado' }}</p>
-            <p><strong>Descripción:</strong> {{ actividad.descripcion or 'No proporcionada' }}</p>
+        <h3>Tema</h3>
+        <ul>
+            {% for t in actividad.temas %}
+                <p>
+                    <strong>
+                        {% if t.tema == 'otro' and t.glosa_otro %}
+                            {{ t.glosa_otro }}
+                        {% else %}
+                            {{ t.tema }}
+                        {% endif %}
+                    </strong>
+                </p>
+            {% endfor %}
+        </ul>
 
-            <h3>Temas</h3>
-            <ul>
-                {% for t in actividad.temas %}
-                    <li>{{ t.tema }}</li>
-                {% endfor %}
-            </ul>
+        <h3>Datos del Organizador</h3>
+        <p><strong>Email:</strong> {{ actividad.email }}</p>
+        <p><strong>Celular:</strong> {{ actividad.celular or 'No informado' }}</p>
 
-            <h3>Datos del Organizador</h3>
-            <p><strong>Email:</strong> {{ actividad.email }}</p>
-            <p><strong>Celular:</strong> {{ actividad.celular or 'No informado' }}</p>
+        <h3>Redes de Contacto</h3>
+        <ul>
+            {% for c in actividad.contactos %}
+                <p><strong>{{ c.nombre }}:</strong> {{ c.identificador }}</p>
+            {% endfor %}
+        </ul>
 
-            <h3>Redes de Contacto</h3>
-            <ul>
-                {% for c in actividad.contactos %}
-                    <li>{{ c.red_social }}: {{ c.identificador }}</li>
-                {% endfor %}
-            </ul>
-
-            <h3>Fotos</h3>
-            <div class="galeria">
-                {% for foto in actividad.fotos %}
-                    <img src="{{ url_for('static', filename='uploads/' ~ foto.archivo) }}" alt="Foto actividad" style="max-width: 320px;">
-                {% endfor %}
-            </div>
-
-            <br>
-            <a href="{{ url_for('listado') }}">← Volver al listado</a>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Plataforma de Actividades Recreativas</p>
-    </footer>
-</body>
+        <h3>Fotos</h3>
+        <div class="galeria">
+            {% for foto in actividad.fotos %}
+                <img src="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" alt="Foto actividad">
+            {% endfor %}
+        </div>
+    </section>
 </html>

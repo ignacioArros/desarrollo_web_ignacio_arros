@@ -10,6 +10,11 @@ def validar_email(email):
 def validar_celular(celular):
     return not celular or CELULAR_REGEX.match(celular)
 
+def validar_contactos(contactos):
+    if len(contactos) > 5:
+        return False
+    return True
+
 def validar_fecha_iso(fecha):
     try:
         from datetime import datetime

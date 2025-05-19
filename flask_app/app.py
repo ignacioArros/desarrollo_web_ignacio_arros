@@ -65,7 +65,6 @@ def informar():
             tema_otro = request.form.get('tema_otro')
             contactos = request.form.getlist('contacto')
             archivos = request.files.getlist('fotos')
-            # print(comuna_id, sector, nombre, email, celular, inicio, termino, descripcion, temas, tema_otro, contactos)
 
             # Insertar actividad
             create_actividad(

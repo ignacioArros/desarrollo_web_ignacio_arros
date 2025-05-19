@@ -14,7 +14,6 @@ def validar_celular(celular):
     return not celular or CELULAR_REGEX.match(celular)
 
 def validar_contactos(contactos):
-    # contactos es una lista de diccionarios [{'nombre':..., 'identificador':...}]
     if not contactos or len(contactos) == 0:
         return False
     if len(contactos) > 5:
@@ -122,6 +121,6 @@ def validar_todo(data, archivos, contactos=None):
     if not validar_archivos_imagen(archivos):
         errores.append('Todos los archivos deben ser imágenes válidas, no exceder 10 MB y máximo 5 fotos.')
     if contactos is not None and not validar_contactos(contactos):
-        errores.append('Debes ingresar entre 1 y 5 formas de contacto válidas.')
+        errores.append('Debes ingresar entre 0 y 5 contactos válidos (sin espacios al inicio o final).')
     return errores
 

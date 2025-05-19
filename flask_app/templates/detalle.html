@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Actividad</title>
+</head>
+<body>
     <section>
         <h3>Organizador: {{ actividad.nombre }}</h3>
         <p><strong>Comuna:</strong> {{ actividad.comuna.nombre }}</p>
@@ -28,9 +33,9 @@
         <p><strong>Celular:</strong> {{ actividad.celular or 'No informado' }}</p>
 
         <h3>Redes de Contacto</h3>
-        <ul>
+        <ul class="contactos-lista">
             {% for c in actividad.contactos %}
-                <p><strong>{{ c.nombre }}:</strong> {{ c.identificador }}</p>
+                <li><strong>{{ c.nombre }}:</strong> {{ c.identificador }}</li>
             {% endfor %}
         </ul>
 
@@ -41,4 +46,5 @@
             {% endfor %}
         </div>
     </section>
+</body>
 </html>

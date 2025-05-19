@@ -60,11 +60,11 @@
             </table>
             <div class="paginacion">
                 {% if page > 1 %}
-                    <a href="{{ url_for('listado', page=page-1) }}">Anterior</a>
+                    <a href="{{ url_for('listado', page=page-1) }}" class="boton">Anterior</a>
                 {% endif %}
                 <span>Página {{ page }} de {{ max_page }}</span>
                 {% if page < max_page %}
-                    <a href="{{ url_for('listado', page=page+1) }}">Siguiente</a>
+                    <a href="{{ url_for('listado', page=page+1) }}" class="boton">Siguiente</a>
                 {% endif %}
             </div>
         </section>
@@ -73,7 +73,7 @@
             <h2>Detalle de la Actividad</h2>
             <div id="detalle-contenido"></div>
             <button onclick="volverListado()">Volver al Listado</button>
-            <a href="{{ url_for('index') }}"><button>Volver al Inicio</button></a>
+            <a href="{{ url_for('index') }}" class="boton">Volver al Inicio</a>
         </section>
     </main>
 

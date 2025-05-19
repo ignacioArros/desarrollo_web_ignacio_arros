@@ -84,18 +84,24 @@ footer {
     transform: scale(1.03);
 }
 
-button {
-    background-color: #0073e6;
-    color: white;
-    border: none;
+button,
+.boton {
+    display: inline-block;
     padding: 10px 20px;
-    border-radius: 5px;
+    background: #0073e6;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    font-size: 1em;
     cursor: pointer;
-    transition: background 0.3s;
+    margin: 8px 0;
+    transition: background 0.2s;
 }
 
-button:hover {
-    background-color: #005bb5;
+button:hover,
+.boton:hover {
+    background: #005bb5;
 }
 
 .boton-cerrar-foto {
@@ -120,4 +126,15 @@ button:hover {
 .temas-lista li {
     display: inline-block;
     margin: 0 10px;
+}
+
+ul.contactos-lista {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+ul.contactos-lista li {
+    margin: 6px 0;
+    display: block;
 }

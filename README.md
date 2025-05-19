@@ -64,7 +64,7 @@ proyecto/
 ## Decisiones tomadas
 
 - Al igual que en la Tarea 1, para los cambios en los CSS decidí usar ChatGPT para que me diera un diseño rápido y legible (se modificarom para que sean más consistentes entre páginas). También me ayudó a corregir algunos errores (en especial cuando los metí al validador de HTML y CSS).
-- Las imágenes siguen siendo las mismas de la tarea 1, y las usé para testear la subida de actividades a la base de datos (por eso están con sus nombres originales y sin encriptar). Al momento de usarlas, cuando son subidas a la base de datos, los nombres se cambian a un formato más seguro y encriptado, como debería ser.
+- Las imágenes siguen siendo las mismas de la tarea 1, y las usé para testear la subida de actividades a la base de datos (por eso están con sus nombres originales y sin encriptar dentro de static/uploads). Al momento de usarlas, cuando son subidas a la base de datos, los nombres se cambian a un formato más seguro y encriptado, como debería ser.
 - Decidí que la relación entre regiones y comunas para el template de informar actividad las construiría en formato JSON antes de entregarle los datos, de tal forma que no cambie mucho el código de Javascript para desplegar las comunas de cada región. Espero que el formato en que yo lo hice haya sido el más seguro, dado que leí por Stack Overflow que hay ciertas formas en que pueden haber vulnerabilidades a ataques XSS y cosas por el estilo.
 - Los gráficos en estadísticas fueron hechos con Excel, todos los datos de la página fueron inventados. Siguen igual que en la Tarea 1 y solo se hace un render básico del template con Flask.
 

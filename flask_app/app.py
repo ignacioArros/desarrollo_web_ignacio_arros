@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, abort, jsonify
 from database.db import (
     get_all_regions, get_all_comunas, get_all_actividades, get_all_actividades_por_id_desc, get_actividad_by_id,
-    get_actividad_by_campos, create_actividad, create_tema, create_contacto, create_foto
+    get_actividad_by_campos, create_actividad, create_tema, create_contacto, create_foto,
+    get_actividades_por_dia, get_actividades_por_tipo, get_actividades_por_horario, get_resumen_general
 )
 import hashlib
 import os
@@ -9,6 +10,7 @@ import filetype
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from utils.validations import validar_todo
+from sqlalchemy import func
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -148,4 +150,58 @@ def detalle_actividad(actividad_id):
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
+
+@app.route('/api/estadisticas/actividades_por_dia')
+def api_actividades_por_dia():
+    results = get_actividades_por_dia()
+    dias = [str(r[0]) for r in results]
+    cantidades = [r[1] for r in results]
+    return jsonify({"dias": dias, "cantidades": cantidades})
+
+@app.route('/api/estadisticas/actividades_por_tipo')
+def api_actividades_por_tipo():
+    results = get_actividades_por_tipo()
+    tipos = [r[0] for r in results]
+    cantidades = [r[1] for r in results]
+    return jsonify({"tipos": tipos, "cantidades": cantidades})
+
+@app.route('/api/estadisticas/actividades_por_horario')
+def api_actividades_por_horario():
+    actividades = get_actividades_por_horario()
+    meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+    mes_idx = {i+1: meses[i] for i in range(12)}
+    conteo = {mes: {'manana': 0, 'mediodia': 0, 'tarde': 0} for mes in meses}
+    for act in actividades:
+        if not act.dia_hora_inicio:
+            continue
+        mes = mes_idx[act.dia_hora_inicio.month]
+        hora = act.dia_hora_inicio.hour
+        if 6 <= hora < 12:
+            conteo[mes]['manana'] += 1
+        elif 12 <= hora < 18:
+            conteo[mes]['mediodia'] += 1
+        elif 18 <= hora < 24 or 0 <= hora < 6:
+            conteo[mes]['tarde'] += 1
+    meses_con_datos = [mes for mes in meses if sum(conteo[mes].values()) > 0]
+    manana = [conteo[mes]['manana'] for mes in meses_con_datos]
+    mediodia = [conteo[mes]['mediodia'] for mes in meses_con_datos]
+    tarde = [conteo[mes]['tarde'] for mes in meses_con_datos]
+    return jsonify({
+        "meses": meses_con_datos,
+        "manana": manana,
+        "mediodia": mediodia,
+        "tarde": tarde
+    })
+
+@app.route('/api/estadisticas/resumen_general')
+def api_resumen_general():
+    data = get_resumen_general()
+    total_actividades = data["total_actividades"]
+    region_nombre = data["region"].nombre if data["region"] else ""
+    tema_nombre = data["tema_frecuente"][0] if data["tema_frecuente"] else ""
+    return jsonify({
+        "total_actividades": total_actividades,
+        "region_top": region_nombre,
+        "tema_top": tema_nombre
+    })
 

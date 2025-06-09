@@ -45,6 +45,22 @@
                 <img src="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" alt="Foto actividad">
             {% endfor %}
         </div>
+
+        <h3>Comentarios</h3>
+        <div id="comentarios-lista">></div>
+
+        <h3>Agregar comentario</h3>
+        <form id="form-comentario" autocomplete="off">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="80">
+            <br>
+            <label for="texto">Comentario:</label>
+            <br>
+            <textarea id="texto" name="texto" rows="4" cols="50" required minlength="5"></textarea>
+            <br>
+            <button type="submit">Agregar comentario</button>
+            <div id="comentario-errores" style="color: red; margin-top: 8px;"></div>
+        </form>
     </section>
 </body>
 </html>

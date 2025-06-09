@@ -301,7 +301,6 @@ def delete_comentario(comentario_id):
     session.close()
 
 # --- Reportes (Estadística) ---
-
 def get_actividades_por_dia():
     session = SessionLocal()
     results = session.query(

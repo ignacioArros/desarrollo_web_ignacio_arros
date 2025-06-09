@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, abo
 from database.db import (
     get_all_regions, get_all_comunas, get_all_actividades, get_all_actividades_por_id_desc, get_actividad_by_id,
     get_actividad_by_campos, create_actividad, create_tema, create_contacto, create_foto,
-    get_actividades_por_dia, get_actividades_por_tipo, get_actividades_por_horario, get_resumen_general
+    get_actividades_por_dia, get_actividades_por_tipo, get_actividades_por_horario, get_resumen_general,
+    create_comentario, get_comentarios_por_actividad
 )
 import hashlib
 import os
@@ -147,10 +148,13 @@ def detalle_actividad(actividad_id):
         abort(404)
     return render_template('detalle.html', actividad=actividad)
 
+# Ruta para las estadísticas
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
 
+# Rutas API
+# Ruta para obtener las actividades por día
 @app.route('/api/estadisticas/actividades_por_dia')
 def api_actividades_por_dia():
     results = get_actividades_por_dia()
@@ -158,6 +162,7 @@ def api_actividades_por_dia():
     cantidades = [r[1] for r in results]
     return jsonify({"dias": dias, "cantidades": cantidades})
 
+# Ruta para obtener las actividades por tipo
 @app.route('/api/estadisticas/actividades_por_tipo')
 def api_actividades_por_tipo():
     results = get_actividades_por_tipo()
@@ -165,6 +170,7 @@ def api_actividades_por_tipo():
     cantidades = [r[1] for r in results]
     return jsonify({"tipos": tipos, "cantidades": cantidades})
 
+# Ruta para obtener las actividades por horario
 @app.route('/api/estadisticas/actividades_por_horario')
 def api_actividades_por_horario():
     actividades = get_actividades_por_horario()
@@ -193,6 +199,7 @@ def api_actividades_por_horario():
         "tarde": tarde
     })
 
+# Ruta para obtener el resumen general de estadísticas
 @app.route('/api/estadisticas/resumen_general')
 def api_resumen_general():
     data = get_resumen_general()
@@ -204,4 +211,34 @@ def api_resumen_general():
         "region_top": region_nombre,
         "tema_top": tema_nombre
     })
+
+# Ruta para subir un comentario asociado a una actividad
+@app.route('/api/comentarios/<int:actividad_id>', methods=['POST'])
+def api_post_comentario(actividad_id):
+    data = request.get_json()
+    nombre = data.get('nombre', '').strip()
+    texto = data.get('texto', '').strip()
+    errores = []
+    if not (3 <= len(nombre) <= 80):
+        errores.append("El nombre debe tener entre 3 y 80 caracteres.")
+    if not (len(texto) >= 5):
+        errores.append("El comentario debe tener al menos 5 caracteres.")
+    if errores:
+        return jsonify({"ok": False, "errores": errores}), 400
+    create_comentario(nombre=nombre, texto=texto, fecha=datetime.now(), actividad_id=actividad_id)
+    return jsonify({"ok": True})
+
+# Ruta para obtener los comentarios de una actividad
+@app.route('/api/comentarios/<int:actividad_id>', methods=['GET'])
+def api_get_comentarios(actividad_id):
+    comentarios = get_comentarios_por_actividad(actividad_id)
+    comentarios_json = [
+        {
+            "nombre": c.nombre,
+            "texto": c.texto,
+            "fecha": c.fecha.strftime('%Y-%m-%d %H:%M')
+        }
+        for c in comentarios
+    ]
+    return jsonify(comentarios_json)
 

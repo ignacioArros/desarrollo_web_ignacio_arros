@@ -62,17 +62,37 @@ function inicializarComentarios(actividadId) {
         fetch(`/api/comentarios/${actividadId}`)
             .then(res => res.json())
             .then(comentarios => {
+                comentariosLista.innerHTML = "";
                 if (comentarios.length === 0) {
-                    comentariosLista.innerHTML = "<p>No hay comentarios aún.</p>";
+                    const p = document.createElement("p");
+                    p.textContent = "No hay comentarios aún.";
+                    comentariosLista.appendChild(p);
                 } else {
-                    comentariosLista.innerHTML = comentarios.map(c =>
-                        `<div class="comentario">
-                            <span style="font-size:0.9em;color:#555;">${c.fecha}</span><br>
-                            <strong>${c.nombre}</strong>:<br>
-                            <span>${c.texto}</span>
-                        </div><hr>`
-                    ).join('');
+                    comentarios.forEach(c => {
+                        const div = document.createElement("div");
+                        div.className = "comentario";
+                        
+                        const fecha = document.createElement("span");
+                        fecha.className = "fecha-comentario";
+                        fecha.textContent = c.fecha;
+
+                        const nombre = document.createElement("strong");
+                        nombre.textContent = c.nombre;
+
+                        const texto = document.createElement("span");
+                        texto.className = "texto-comentario";
+                        texto.textContent = c.texto;
+
+                        div.appendChild(nombre);
+                        div.appendChild(fecha);
+                        div.appendChild(texto);
+
+                        comentariosLista.appendChild(div);
+                    });
                 }
+            })
+            .catch(() => {
+                comentariosLista.innerHTML = "<p style='color:red;'>No se pudieron cargar los comentarios.</p>";
             });
     }
 
@@ -109,6 +129,7 @@ function inicializarComentarios(actividadId) {
         })
         .catch(data => {
             erroresDiv.textContent = (data.errores || ["Error al agregar comentario"]).join(" ");
+            setTimeout(() => { erroresDiv.textContent = ""; }, 2000);
         });
     });
 

@@ -9,20 +9,6 @@ function revisaCheck(checkbox) {
   }
 }
 
-function mostrarTemaOtro(select) {
-  const temaExtra = document.getElementById("tema-extra");
-  temaExtra.innerHTML = "";
-  if (select.value === "otro") {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.name = "tema_otro";
-    input.placeholder = "Especifique el tema";
-    input.minLength = 3;
-    input.maxLength = 15;
-    temaExtra.appendChild(input);
-  }
-}
-  
 document.addEventListener("DOMContentLoaded", () => {
     const regionSelect = document.getElementById("region");
     const comunaSelect = document.getElementById("comuna");
@@ -36,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const agregarFotoBtn = document.getElementById("agregar-foto");
     const temaSelect = document.getElementById("tema");
     const temaExtra = document.getElementById("tema-extra");
+
+    function obtenerTemasSeleccionados() {
+        return Array.from(document.querySelectorAll("input[name='tema']:checked")).map(cb => cb.value);
+    }
 
     // Cambiar comunas al seleccionar región
     regionSelect.addEventListener("change", (e) => {
@@ -121,9 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!inicioVal) return alert("Debe ingresar la fecha de inicio.");
         if (terminoVal && new Date(terminoVal) <= new Date(inicioVal)) return alert("La fecha de término debe ser posterior a la de inicio.");
 
-        if (temaSelect.value === "") return alert("Debe seleccionar un tema.");
-        if (temaOtro && (temaOtro.value.length < 3 || temaOtro.value.length > 15))
-            return alert("El tema debe tener entre 3 y 15 caracteres.");
+        const temas = obtenerTemasSeleccionados();
+
+        if (temas.length === 0) return alert("Debe seleccionar al menos un tema.");
+        if (temas.includes("otro")) {
+          if (!temaOtro || temaOtro.value.length < 3 || temaOtro.value.length > 15) return alert("El tema debe tener entre 3 y 15 caracteres.");
+        }
 
         let alMenosUnaSeleccionada = false;
         fotos.forEach(input => {
@@ -146,4 +139,22 @@ document.addEventListener("DOMContentLoaded", () => {
       confirmBox.style.display = "none";
       form.style.display = "block";
     });
+    
+    // Mostrar/ocultar input para "otro"
+    const temaOtroCheckbox = document.getElementById("tema-otro-checkbox");
+
+    if (temaOtroCheckbox) {
+        temaOtroCheckbox.addEventListener("change", function() {
+            temaExtra.innerHTML = "";
+            if (this.checked) {
+                const input = document.createElement("input");
+                input.type = "text";
+                input.name = "tema_otro";
+                input.placeholder = "Especifique el tema";
+                input.minLength = 3;
+                input.maxLength = 15;
+                temaExtra.appendChild(input);
+            }
+        });
+    }
 });

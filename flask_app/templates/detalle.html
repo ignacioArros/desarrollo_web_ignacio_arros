@@ -13,7 +13,7 @@
         <p><strong>Término:</strong> {{ actividad.dia_hora_termino.strftime("%Y-%m-%d %H:%M") if actividad.dia_hora_termino else 'No especificado' }}</p>
         <p><strong>Descripción:</strong> {{ actividad.descripcion or 'No proporcionada' }}</p>
 
-        <h3>Tema</h3>
+        <h3>Tema(s)</h3>
         <ul class="temas-lista">
             {% for t in actividad.temas %}
                 <li>

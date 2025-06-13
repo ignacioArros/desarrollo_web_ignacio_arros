@@ -106,21 +106,23 @@
                 <label for="descripcion">Descripción:</label>
                 <textarea id="descripcion" name="descripcion" cols="50" rows="10" maxlength="500"></textarea>
 
-                <label for="tema">Tema:</label>
-                <select id="tema" name="tema" required onchange="mostrarTemaOtro(this)">
-                    <option value="">Seleccionar</option>
-                    <option value="música">Música</option>
-                    <option value="deporte">Deporte</option>
-                    <option value="ciencias">Ciencias</option>
-                    <option value="religión">Religión</option>
-                    <option value="política">Política</option>
-                    <option value="tecnología">Tecnología</option>
-                    <option value="juegos">Juegos</option>
-                    <option value="baile">Baile</option>
-                    <option value="comida">Comida</option>
-                    <option value="otro">Otro</option>
-                </select>
-                <div id="tema-extra"></div>
+                <label>Temas:</label>
+                <div id="temas-checkboxes" style="margin-bottom: 10px;">
+                    <label><input type="checkbox" name="tema" value="música"> Música</label>
+                    <label><input type="checkbox" name="tema" value="deporte"> Deporte</label>
+                    <label><input type="checkbox" name="tema" value="ciencias"> Ciencias</label>
+                    <label><input type="checkbox" name="tema" value="religión"> Religión</label>
+                    <label><input type="checkbox" name="tema" value="política"> Política</label>
+                    <label><input type="checkbox" name="tema" value="tecnología"> Tecnología</label>
+                    <label><input type="checkbox" name="tema" value="juegos"> Juegos</label>
+                    <label><input type="checkbox" name="tema" value="baile"> Baile</label>
+                    <label><input type="checkbox" name="tema" value="comida"> Comida</label>
+                    <label>
+                        <input type="checkbox" name="tema" value="otro" id="tema-otro-checkbox">
+                        Otro
+                    </label>
+                    <span id="tema-extra"></span>
+                </div>
 
                 <label>Fotos:</label>
                 <div id="foto-container">

@@ -1,3 +1,4 @@
+-- Active: 1746498985192@@127.0.0.1@3306@tarea2
 CREATE TABLE IF NOT EXISTS `tarea2`.`nota` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `actividad_id` INT NOT NULL,

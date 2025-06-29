@@ -21,6 +21,7 @@ public class NotaService {
         return notaRepository.findByActividadId(actividadId);
     }
 
+    // Ver si utilizar este metodo en el controlador
     public Double calcularPromedioPorActividad(Integer actividadId) {
         List<Nota> notas = obtenerNotasPorActividad(actividadId);
         if (notas.isEmpty()) return null;

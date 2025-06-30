@@ -19,15 +19,35 @@ public class ActividadTema {
     private Integer actividadId;
 
     // Getters y setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getId() { 
+        return id; 
+    }
 
-    public String getTema() { return tema; }
-    public void setTema(String tema) { this.tema = tema; }
+    public void setId(Integer id) { 
+        this.id = id; 
+    }
 
-    public String getGlosaOtro() { return glosaOtro; }
-    public void setGlosaOtro(String glosaOtro) { this.glosaOtro = glosaOtro; }
+    public String getTema() { 
+        return tema; 
+    }
 
-    public Integer getActividadId() { return actividadId; }
-    public void setActividadId(Integer actividadId) { this.actividadId = actividadId; }
+    public void setTema(String tema) { 
+        this.tema = tema; 
+    }
+
+    public String getGlosaOtro() { 
+        return glosaOtro; 
+    }
+
+    public void setGlosaOtro(String glosaOtro) { 
+        this.glosaOtro = glosaOtro; 
+    }
+
+    public Integer getActividadId() { 
+        return actividadId; 
+    }
+
+    public void setActividadId(Integer actividadId) { 
+        this.actividadId = actividadId; 
+    }
 }

@@ -1,6 +1,8 @@
-# Plataforma de Registro de Actividades - Tarea 3 - Desarrollo Web
+# Plataforma de Registro de Actividades - Tarea 4 - Desarrollo Web
 
-Este proyecto es una aplicación web desarrollada para el curso CC5002 - Desarrollo de Aplicaciones Web, de la carrera de Ingeniería Civil en Computación de la Universidad de Chile. Posee las siguientes funcionalidades:
+Este proyecto es una aplicación web desarrollada para el curso CC5002 - Desarrollo de Aplicaciones Web, de la carrera de Ingeniería Civil en Computación de la Universidad de Chile. Está dividida en dos aplicaciones diferentes (una hecha con Flask y otra con Spring Boot). 
+
+La aplicación de Flask posee las siguientes funcionalidades:
 
 - Permite registrar, guardar, listar y visualizar actividades realizadas en distintas comunas y regiones, con detalles sobre el autor, el tema y fotografías. 
 
@@ -8,7 +10,11 @@ Este proyecto es una aplicación web desarrollada para el curso CC5002 - Desarro
 
 - Hay estadísticas funcionales que permiten ver las actividades registradas, ya sea por la cantidad de actividades en un día, el total de actividades por tipo, y como se distribuyen las actividades por mes y hora del día. 
 
-Esta es la Tarea 3.
+La aplicación de Spring Boot posee la siguiente funcionalidad:
+
+- Permite evaluar las actividades que ya han finalizado (fecha de término anterior a la actual) con una nota del 1 al 7.
+
+Esta es la Tarea 4.
 
 ---
 
@@ -16,7 +22,7 @@ Esta es la Tarea 3.
 
 ```
 proyecto/
-├── flask_app/
+├── flask_app/                   # Aplicación hecha con Flask
 │   ├── database/
 │   │   ├── create_user.sql
 │   │   ├── db.py
@@ -47,12 +53,48 @@ proyecto/
 │   ├── app.py                 # Aplicación creada en Flask
 │   ├── region_comuna.json     # Mismo contenido que region_comuna.js pero en formato JSON
 │   └── requirements.txt       # Para instalar usar "pip install -r requirements.txt"
+├── springboot_app/            # Aplicación hecha con Spring Boot
+│   ├── src/
+│   │   ├── main
+│   │   │   ├── java/springboot_app/springboot_app
+│   │   │   │   ├── controllers
+│   │   │   │   │   ├── ActividadController.java        # Controlador para actividades
+│   │   │   │   │   ├── NotaController.java             # Controlador para notas
+│   │   │   │   │   └── VistaController.java            # Controlador para vista (HTML)
+│   │   │   │   ├── dto
+│   │   │   │   │   └── ActividadDto.java               # Data Transfer Object para actividades
+│   │   │   │   ├── models
+│   │   │   │   │   ├── Actividad.java                  # Modelo para actividades
+│   │   │   │   │   ├── ActividadTema.java              # Modelo para temas de actividades
+│   │   │   │   │   └── Nota.java                       # Modelo para notas
+│   │   │   │   ├── repositories
+│   │   │   │   │   ├── ActividadRepository.java        # Repositorio de actividades
+│   │   │   │   │   ├── ActividadTemaRepository.java    # Repositorio de temas de actividades
+│   │   │   │   │   └── NotaRepository.java             # Repositorio de notas
+│   │   │   │   ├── services
+│   │   │   │   │   ├── ActividadService.java           # Servicio de actividades
+│   │   │   │   │   └── NotaService.java                # Servicio de notas
+│   │   │   │   └── SpringbootAppApplication.java       # Manejo de aplicación de Spring Boot 
+│   │   │   └── resources
+│   │   │   │   ├── static
+│   │   │   │   │   ├── css
+│   │   │   │   │   │   └── styles.css
+│   │   │   │   │   └── js
+│   │   │   │   │       └── notas.js
+│   │   │   │   ├── templates
+│   │   │   │   │   └── notas.html                      # Página de evaluación de actividades
+│   │   │   │   └── application.properties              # Configuración de app de Spring Boot
+│   │   └── test/java/springboot_app/springboot_app
+│   │       └── SpringbootAppApplicationTests.java      # (No hay tests aquí)
+│   └── ...                    # Otras cosas configuradas automáticamente por Spring Boot
 └── README.md
 ```
 
 ---
 
 ## Cómo usar
+
+### Aplicación de Flask
 
 1. Posicionar una terminal en la carpeta "flask_app".
 2. Idealmente crear un ambiente virtual con python ("python -m venv venv").
@@ -68,14 +110,24 @@ proyecto/
    - **Ver el listado de todas las actividades** con detalles y fotos.
    - **Visualizar estadísticas** (gráficos como imágenes estáticas).
 
+### Aplicación de Spring Boot
+
+**NOTA:** Esta aplicación solo tiene funcionalidad si es que ya se han ingresado actividades a la base de datos local (mediante la aplicación de Flask o manualmente).
+
+1. Asegurarse de tener la última versión de Spring Boot (3.5.3), JPA y al menos tener Java versión 17 instalado.
+2. Usando un IDE como VSCode, abrir el archivo "SpringbootAppApplication.java".
+3. Clickear el botón "run" en la esquina superior derecha.
+4. (Método alternativo): Si se tiene instalado las extensiones de Spring Boot en VSCode (en específico Spring Boot Dashboard), se puede iniciar clickeando el submenú de Spring Boot y clickear el boton de "Run".
+5. El proyecto debería abrirse en la dirección localhost en el puerto 8080 (http://127.0.0.1:8080, o también, http://localhost:8080).
+6. Al ir a esa dirección en su navegador, debería encontrarse con una página que tenga un listado de actividades que ya han terminado de realizarse (fecha de término de la actividad es menor que la actual). En ella se puede evaluar la actividad con una nota del 1 al 7.
 ---
 
 ## Decisiones tomadas
 
-- Al igual que en la Tarea 1 y 2, para los cambios en los CSS (para los comentarios de las actividades en esta tarea en específico) decidí usar ChatGPT para que me diera un diseño rápido y legible (se modificaron para que sean más consistentes entre páginas). También me ayudó a corregir algunos errores (en especial cuando los metí al validador de HTML y CSS).
-- Las imágenes siguen siendo las mismas de la tarea 1 y 2, y las usé para testear la subida de actividades a la base de datos (por eso están con sus nombres originales y sin encriptar dentro de static/uploads). Al momento de usarlas, cuando son subidas a la base de datos, los nombres se cambian a un formato más seguro y encriptado, como debería ser.
-- Los gráficos en estadísticas toman en cuenta las actividades subidas a la base de datos, por lo tanto para ver como se visualizan los gráficos hay que primero añadir algunas actividades (se recomienda por lo menos 5, con distintos temas y fechas de inicio).
-- Los comentarios se validan tanto en el Javascript (frontend) como en app.py (backend). Sin embargo, no se usa el campo "required" en esa parte del html, con el fin de que se muestre un mensaje de error en el formulario usando código de Javascript.
+- Se usó el mismo CSS principal en la app de Spring Boot que en la app de Flask, por lo que se hizo el nuevo HTML (notas.html) en torno a lo que ya estaba configurado (similar a lo que estaba en index.html).
+- Las imágenes siguen siendo las mismas de las tareas anteriores, y las usé para testear la subida de actividades a la base de datos (por eso están con sus nombres originales y sin encriptar dentro de static/uploads). Al momento de usarlas, cuando son subidas a la base de datos, los nombres se cambian a un formato más seguro y encriptado, como debería ser.
+- Aunque instalé Thymeleaf en conjunto con Spring Boot tal como se vió en las auxiliares 9 y 10, no lo utilicé en ningún momento de la tarea, principalmente porque no encontré que lo necesitara para realizarla.
+- Aún cuando no se vio los DTOs en auxiliares, yo los he usado anteriormente para mi práctica 2 (donde tuve que usar DTOs en Spring Boot). Por eso es que decidí incorporar uno en esta tarea (ActividadDto) para que el código estuviera mejor organizado y los datos se transfirieran de una mejor forma.
 
 ---
 
@@ -86,6 +138,8 @@ proyecto/
 ### Backend
 - Flask
 - SQLAlchemy
+- Spring Boot
+- JPA
 ### Frontend
 - HTML5
 - CSS3

@@ -8,7 +8,6 @@ public class VistaController {
 
     @GetMapping("/")
     public String mostrarActividades() {
-        // Retorna el nombre del archivo HTML (sin extensión) en /templates
         return "notas";
     }
 }

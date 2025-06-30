@@ -30,6 +30,7 @@ function evaluar(actividadId, btn) {
 
     const valor = Number(nota);
 
+    // Usuario ingresó un valor no numérico o fuera del rango permitido
     if (isNaN(valor) || !Number.isInteger(valor) || valor < 1 || valor > 7) {
         alert("Nota inválida. Solo se permiten números enteros entre 1 y 7.");
         return;

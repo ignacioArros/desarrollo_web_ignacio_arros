@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import springboot_app.springboot_app.models.Nota;
 import springboot_app.springboot_app.services.NotaService;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/notas")
@@ -22,6 +23,6 @@ public class NotaController {
         }
         notaService.agregarNota(nota);
         Double promedio = notaService.calcularPromedioPorActividad(nota.getActividadId());
-        return ResponseEntity.ok(promedio != null ? promedio : "-");
+        return ResponseEntity.ok(promedio != null ? String.format(Locale.US, "%.1f", promedio) : "-");
     }
 }

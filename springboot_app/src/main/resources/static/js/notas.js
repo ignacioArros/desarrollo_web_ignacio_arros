@@ -5,10 +5,9 @@ function cargarActividades() {
             const tbody = document.getElementById('actividades-list');
             tbody.innerHTML = '';
             data.forEach(act => {
-                // Si tienes el campo tema como lista, ajústalo aquí
-                let tema = act.tema || '-';
-                if (Array.isArray(act.temas)) {
-                    tema = act.temas.map(t => t.tema === 'otro' && t.glosa_otro ? t.tema + ' (' + t.glosa_otro + ')' : t.tema).join(', ');
+                let tema = '-';
+                if (Array.isArray(act.temas) && act.temas.length > 0) {
+                    tema = act.temas.map(t => t.tema === 'otro' && t.glosaOtro ? t.tema + ' (' + t.glosaOtro + ')' : t.tema).join(', ');
                 }
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -26,12 +25,16 @@ function cargarActividades() {
 }
 
 function evaluar(actividadId, btn) {
-    const nota = prompt("Ingrese una nota entre 1 y 7:");
-    const valor = parseInt(nota);
-    if (isNaN(valor) || valor < 1 || valor > 7) {
-        alert("Nota inválida");
+    const nota = prompt("Ingrese una nota entre 1 y 7 (solo números enteros):");
+    if (nota === null) return; // Usuario canceló, no hacer nada
+
+    const valor = Number(nota);
+
+    if (isNaN(valor) || !Number.isInteger(valor) || valor < 1 || valor > 7) {
+        alert("Nota inválida. Solo se permiten números enteros entre 1 y 7.");
         return;
     }
+
     fetch('/api/notas', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

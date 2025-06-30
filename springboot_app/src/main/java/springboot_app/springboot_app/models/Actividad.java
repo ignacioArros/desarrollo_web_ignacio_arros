@@ -35,6 +35,11 @@ public class Actividad {
     @Column(name = "descripcion")
     private String descripcion;
 
+    // Relación con Tema
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "actividad_id", referencedColumnName = "id")
+    private List<ActividadTema> temas;
+
     // Relación con Nota
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "actividadId", cascade = CascadeType.ALL)
     private List<Nota> notas;
@@ -112,6 +117,14 @@ public class Actividad {
         this.descripcion = descripcion; 
     }
 
+    public List<ActividadTema> getTemas() { 
+        return temas; 
+    }
+    
+    public void setTemas(List<ActividadTema> temas) { 
+        this.temas = temas; 
+    }
+
     public List<Nota> getNotas() { 
         return notas; 
     }
@@ -120,11 +133,4 @@ public class Actividad {
         this.notas = notas; 
     }
 
-    // Método para obtener el promedio de notas (??????)
-    @Transient
-    public String getPromedioNotas() {
-        if (notas == null || notas.isEmpty()) return "-";
-        double promedio = notas.stream().mapToInt(Nota::getNota).average().orElse(0.0);
-        return String.format("%.2f", promedio);
-    }
 }
